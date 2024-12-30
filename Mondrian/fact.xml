@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+<Schema name="fact">
+
+<Cube name="Fact" defaultMeasure="Amount">
+  <Table name="fact_rentals"/>
+ 
+  <Dimension name="Store" foreignKey="sk_store">
+    <Hierarchy hasAll="true" allMemberName="All Store" primaryKey="sk_store">
+      <Table name="dim_store" />
+      
+      <!-- Menentukan level 1" -->
+      <Level name="StoreCountry" column="store_country"/>
+      
+    </Hierarchy>
+  </Dimension>
+
+  <Dimension name="Staff" foreignKey="sk_staff">
+    <Hierarchy hasAll="true" allMemberName="All Staff" primaryKey="sk_staff">
+      <Table name="dim_staff" />
+      
+      <!-- Menentukan level 1" -->
+      <Level name="StaffName" column="staff_name"/>
+      
+    </Hierarchy>
+  </Dimension>
+
+  <Dimension name="Customers Segmentation" foreignKey="sk_customer">
+    <Hierarchy hasAll="true" allMemberName="All Customers" primaryKey="sk_customer">
+      <Table name="dim_customer" />
+      
+      <!-- Menentukan level 1" -->
+      <Level name="CustomerCountry" column="customer_country"/>
+
+      <!-- Menentukan level 2" -->
+      <Level name="CustomerDistrict" column="customer_district"/>
+
+      <!-- Menentukan level 3" -->
+      <Level name="CustomerCity" column="customer_city"/>
+      
+    </Hierarchy>
+  </Dimension>
+
+  <Dimension name="Film Rating" foreignKey="sk_film">
+    <Hierarchy hasAll="true" allMemberName="All Rating" primaryKey="sk_film">
+      <Table name="dim_film" />
+      
+      <!-- Menentukan level 1" -->
+      <Level name="FilmRating" column="film_rating"/>
+
+      <!-- Menentukan level 2" -->
+      <Level name="FilmTittle" column="film_title"/>
+      
+    </Hierarchy>
+  </Dimension>
+
+    
+  <!-- Measures -->
+    <Measure name="Total Amount" column="payment_amount" aggregator="sum" formatString="Standard"/>
+    <Measure name="Total Sales" column="trx_id" aggregator="count" formatString="#,##0" />
+  
+</Cube>
+
+</Schema>
+
+<!-- <?xml version="1.0"?>
+<Schema name="fact_sales">
+
+	<Cube name="Sales" defaultMeasure="Total Amount">
+
+		<Table name="fact_sales" />
+		<Dimension name="Store" foreignKey="sk_store">
+			<Hierarchy name="Store" hasAll="true" allMemberName="All Store" primaryKey="sk_store">
+				<Table name="dim_store" />
+				<Level name="Store Country" column="store_country" uniqueMembers="true" />
+			</Hierarchy>
+		</Dimension>
+
+		<Dimension name="Customer Demographics" foreignKey="sk_customer">
+			<Hierarchy name="Customer Demographics" hasAll="true" allMemberName="All Countries" primaryKey="sk_customer">
+				<Table name="dim_customer" />
+				<Level name="Customer Country" column="customer_country" uniqueMembers="true" />
+				<Level name="Customer City" column="customer_city" uniqueMembers="true" />
+        		<Level name="Customer District" column="customer_district" uniqueMembers="true" />
+			</Hierarchy>
+		</Dimension>
+
+		<Dimension name="Film Category" foreignKey="sk_film">
+			<Hierarchy name="Film Category" hasAll="true" allMemberName="All Categories" primaryKey="sk_film">
+				<Table name="dim_film" />
+				<Level name="Film Category" column="film_category" uniqueMembers="true" />
+        		<Level name="Film Title" column="title" uniqueMembers="true" />
+			</Hierarchy>
+		</Dimension>
+
+		<Measure name="Total Sales" column="sales_id" aggregator="count" formatString="#,##0" />
+		<Measure name="Total Amount" column="amount" aggregator="sum" formatString="#,##0.00" />
+	</Cube>
+
+</Schema> -->
